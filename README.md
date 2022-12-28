@@ -1,5 +1,5 @@
 # LyraCollector
-A simple Python script to assist in collecting information from Cisco devices. Handles SSH connections with Netmiko.
+A simple Python script to assist in collecting information from Cisco IOS and IOS-XE devices. Handles SSH connections with Netmiko.
 
 # Syntax
 LyraCollector.py -c <csv_file>
