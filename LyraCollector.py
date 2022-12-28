@@ -51,7 +51,7 @@ def collector(device_ip, device_port, ssh_user, ssh_pass):
         f.write(output)
         print("--> File saved: " + filename)
 
-        # encerra conexao
+        # close connection
         ch.disconnect()
         print("[!] Connection closed.\n")
 
