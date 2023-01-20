@@ -18,18 +18,18 @@ def collector(device_ip, device_port, ssh_user, ssh_pass):
     with ConnectHandler(**params) as ch:
 
         print(f"\n[!] Conexao estabelecida com {device_ip}")
-        # seta terminal length para evitar erros com outputs extensos     
+        # sets terminal length to avoid issues with longer outputs
         ch.send_command('terminal length 0')
 
-        # identifica hostname
+        # gets device hostname
         gethostname = ch.send_command('show running-config | include hostname')
         hostname = gethostname.split()[1]
         
-        # define nome do arquivo que sera criado com base no hostname do equipamento
+        # defines output filename based on device hostname
         filename = f"{hostname}.txt"
         print(f"--> Hostname: {hostname}")
 
-        # coleta informacoes   
+        # collects information  
         print("--> Coletando informacoes...")
         output = "#show version\n" + ch.send_command('show version') + "\n\n\n"
         output += "#show inventory\n" + ch.send_command('show inventory') + "\n\n\n"
@@ -42,27 +42,22 @@ def collector(device_ip, device_port, ssh_user, ssh_pass):
         output += "#show ip route\n" + ch.send_command('show ip route') + "\n\n\n"
         output += "#show vrf\n" + ch.send_command('show vrf') + "\n\n\n"        
 
-        # grava outputs em arquivo
-        print("--> Gravando informacoes...")
+        # writes information to file
+        print("--> Writing output file...")
         f = open(filename, "w")
         f.write("-" * 30 + "\n" + hostname + "\n" + "-" * 30 + "\n\n")
         f.write(output)
-        print("--> Criado arquivo " + filename)
+        print("--> File saved: " + filename)
 
-        # encerra conexao
+        # closes connection
         ch.disconnect()
-        print("[!] Conexao encerrada.\n")
+        print("[!] Connection closed.\n")
 
 def main():
     parser = ArgumentParser(description='')
-    parser.add_argument('-c', '--csv', required=True, help='arquivo CSV')    
+    parser.add_argument('-c', '--csv', required=True, help='CSV file')    
 
-    # credenciais
-    #ssh_user = input('\nSSH Username: ')
-    #ssh_pass = getpass.getpass('SSH Password: ')
-    #device_port = "22"
-
-    # csv
+    # csv handler
     csv_file = parser.parse_args().csv
     with open(csv_file, mode='r') as devices_list:
         csv_reader = csv.DictReader(devices_list, delimiter=',')
