@@ -17,7 +17,7 @@ def collector(device_ip, device_port, ssh_user, ssh_pass):
 
     with ConnectHandler(**params) as ch:
 
-        print(f"\n[!] Conexao estabelecida com {device_ip}")
+        print(f"\n[!] Connected to {device_ip}")
         # sets terminal length to avoid issues with longer outputs
         ch.send_command('terminal length 0')
 
