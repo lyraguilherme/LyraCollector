@@ -30,7 +30,7 @@ def collector(device_ip, device_port, ssh_user, ssh_pass):
         print(f"--> Hostname: {hostname}")
 
         # collects information  
-        print("--> Coletando informacoes...")
+        print("--> Collecting information...")
         output = "#show version\n" + ch.send_command('show version') + "\n\n\n"
         output += "#show inventory\n" + ch.send_command('show inventory') + "\n\n\n"
         output += "#show modules\n" + ch.send_command('show modules') + "\n\n\n"
